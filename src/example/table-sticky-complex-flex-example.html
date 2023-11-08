@@ -1,0 +1,123 @@
+<section
+  class="container mat-elevation-z8"
+  tabindex="0"
+  infiniteScroll
+  [scrollWindow]="false"
+  [infiniteScrollDistance]="1"
+  (scrolled)="onScroll()"
+>
+  <mat-table [dataSource]="dataSourceTop$" class="table-general">
+    <ng-container matColumnDef="expand" [sticky]="true">
+      <mat-header-cell *matHeaderCellDef>
+        <button mat-icon-button (click)="toggleCollapsedTop()">
+          <mat-icon *ngIf="isCollapsedTop">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="!isCollapsedTop">keyboard_arrow_up</mat-icon>
+        </button>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let data"><b>{{data.label}}</b></mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="commercial-conditions" [sticky]="true">
+      <mat-header-cell *matHeaderCellDef
+        >Commercial conditions</mat-header-cell
+      >
+      <mat-cell *matCellDef="let data"> {{data.conditions || '-'}} </mat-cell>
+    </ng-container>
+
+    <ng-container
+      *ngFor="let supplier of (suppliers$$ | async)"
+      matColumnDef="{{ supplier.id }}"
+      [sticky]="false"
+    >
+      <mat-header-cell class="column-supplier" *matHeaderCellDef
+        >{{supplier.name}}</mat-header-cell
+      >
+      <mat-cell class="column-supplier" *matCellDef="let data"
+        >{{data[supplier.id]}}</mat-cell
+      >
+    </ng-container>
+
+    <mat-header-row
+      *matHeaderRowDef="(displayedColumnsTableTop$ | async); sticky: true"
+    ></mat-header-row>
+
+    <mat-row
+      *matRowDef="let row; let index; columns: (displayedColumnsTableTop$ | async); when: whenMain.bind(this)"
+      [style.backgroundColor]="row.bg"
+    ></mat-row>
+
+    <mat-row
+      *matRowDef="let row; columns: (displayedColumnsTableTop$ | async); when: whenCollapsible.bind(this)"
+      [@detailExpandTop]="!isCollapsedTop ? 'expanded' : 'collapsed'"
+    ></mat-row>
+  </mat-table>
+
+  <mat-table
+    [dataSource]="dataSourcePositions$"
+    class="table-positions"
+    infiniteScroll
+    [infiniteScrollContainer]="'.container'"
+    [fromRoot]="true"
+    [horizontal]="true"
+    (scrolled)="onHorizontalScroll()"
+  >
+    <ng-container matColumnDef="expandBottom" [sticky]="true">
+      <mat-header-cell *matHeaderCellDef>
+        <button mat-icon-button (click)="toggleCollapseBottom()">
+          <mat-icon *ngIf="isCollapsedBottom">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="!isCollapsedBottom">keyboard_arrow_up</mat-icon>
+        </button>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let data">{{data.name}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="quantity" [sticky]="true">
+      <mat-header-cell *matHeaderCellDef>Quantity</mat-header-cell>
+      <mat-cell *matCellDef="let data">{{data.quantity}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="uom" [sticky]="true">
+      <mat-header-cell *matHeaderCellDef>UoM</mat-header-cell>
+      <mat-cell *matCellDef="let data">{{data.uom}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="price-range" [sticky]="true">
+      <mat-header-cell *matHeaderCellDef>Price range/quantity</mat-header-cell>
+      <mat-cell *matCellDef="let data">
+        {{ data.priceRange.min }} | {{ data.priceRange.max }}
+      </mat-cell>
+      <mat-cell *matCellDef="let data">
+        {{ data.priceRange.min }} | {{ data.priceRange.max }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="price-range-toggle" [sticky]="true">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-slide-toggle></mat-slide-toggle>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let data">{{ data.priceRange.diff }}</mat-cell>
+    </ng-container>
+
+    <ng-container
+      *ngFor="let supplier of (suppliers$$ | async)"
+      matColumnDef="{{ supplier.id }}"
+      [sticky]="false"
+    >
+      <mat-header-cell class="column-supplier" *matHeaderCellDef
+        >{{supplier.name}}</mat-header-cell
+      >
+      <mat-cell class="column-supplier" *matCellDef="let data"
+        >{{data[supplier.id]}}</mat-cell
+      >
+    </ng-container>
+
+    <mat-header-row
+      *matHeaderRowDef="displayedColumnsTableBottom$ | async; sticky: true"
+    ></mat-header-row>
+
+    <mat-row
+      *matRowDef="let row; columns: displayedColumnsTableBottom$ | async;"
+      [@detailExpandBottom]="!isCollapsedBottom ? 'expanded' : 'collapsed'"
+    ></mat-row>
+  </mat-table>
+</section>

@@ -1,0 +1,91 @@
+:host {
+  position: relative;
+}
+
+:host::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 17px; /* scroll height */
+  left: calc(50vw - 10px); /* Adjust percentage and shadow width */
+  width: 10px;
+  box-shadow: 6px -1px 7px 0px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+.container {
+  overflow: auto;
+  max-height: calc(100vh - 40px);
+}
+
+.table-general .mat-mdc-row:last-child {
+  border-bottom: 3px solid black;
+}
+
+.mat-mdc-header-cell,
+.mat-mdc-footer-cell,
+.mat-mdc-cell {
+  box-sizing: border-box;
+  border: 1px solid lightgray;
+  min-width: max-content;
+}
+
+.column-supplier.mat-mdc-header-cell,
+.column-supplier.mat-mdc-footer-cell,
+.column-supplier.mat-mdc-cell {
+  min-width: 150px;
+}
+
+.mat-column-commercial-conditions,
+.mat-column-price-range-toggle {
+  border-right: none; /* since it has a shadow */
+}
+
+.mat-mdc-header-row,
+.mat-mdc-footer-row,
+.mat-mdc-row {
+  min-width: 1000px;
+  width: max-content;
+}
+
+.mat-column-expand {
+  width: 18vw;
+  min-width: 18vw;
+  max-width: 18vw;
+}
+
+.mat-column-commercial-conditions {
+  width: 32vw;
+  min-width: 32vw;
+  max-width: 32vw;
+}
+
+.mat-column-expandBottom {
+  width: 9vw;
+  min-width: 9vw;
+  max-width: 9vw;
+}
+
+.mat-column-quantity {
+  width: 9vw;
+  min-width: 9vw;
+  max-width: 9vw;
+}
+
+.mat-column-uom {
+  width: 8vw;
+  min-width: 8vw;
+  max-width: 8vw;
+}
+
+.mat-column-price-range {
+  width: 16vw;
+  min-width: 16vw;
+  max-width: 16vw;
+}
+
+.mat-column-price-range-toggle {
+  width: 8vw;
+  min-width: 8vw;
+  max-width: 8vw;
+}
